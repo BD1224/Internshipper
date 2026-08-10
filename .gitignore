@@ -1,0 +1,23 @@
+# venv
+.venv/
+
+# secrets
+secrets/
+
+# logs and caches
+*.log
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# macOS metadata
+.DS_Store
+
+# temp folders and python metadata
+dist/
+build/
+*.egg-info/
+
+# container stuff, not going to be used
+.containerignore
+Containerfile

@@ -1,0 +1,8 @@
+[project]
+name = "Internshipper" 
+version = "0.1.0"  # needs these to describe a installable project
+
+dependencies = [
+    "requests>=2.32",
+    "beautifulsoup4>=4.12"
+]
