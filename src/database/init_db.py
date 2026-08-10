@@ -2,6 +2,8 @@ import sqlite3  # built in SQL system
 from config import DB_PATH
 
 def init_db():
+    DB_PATH.parent.mkdir(exist_ok=True)  # makes data/ dir if it doesnt exist
+
     conn = sqlite3.connect(DB_PATH)  # holds sql connected to file
     cursor = conn.cursor()  # used to run sql commands
 
