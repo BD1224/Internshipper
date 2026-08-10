@@ -13,6 +13,9 @@ __pycache__/
 # macOS metadata
 .DS_Store
 
+# database
+tables.db
+
 # temp folders and python metadata
 dist/
 build/
