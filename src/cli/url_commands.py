@@ -24,6 +24,6 @@ def handle_url(user_input):
             else:
                 print("\nUpdated\n")
         case "print":
-            db.print_url_id(user_input[2])
+            db.print_url_from_id(user_input[2])
             
     return 0

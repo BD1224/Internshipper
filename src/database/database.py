@@ -36,7 +36,7 @@ def print_data():
             words_by_site[site[0]] = []  # creates empty list for sites with no words
         print(
             f"{site[0]:<5}"
-            f"{site[1][:30]:<30}   "
+            f"{site[1][:30]:<33}"
             f"{color}{found_application:<8}{RESET}"
             f"{includes_globals:<9}"
             f"{words_by_site[site[0]]}"
@@ -55,14 +55,16 @@ def print_words():
     cursor.execute("SELECT * FROM site_words")
     rows = cursor.fetchall()
 
-    print("\nID   SITE ID   WORD")
+    print("\nID   WORD           SITE ID   URL")
     for row in rows:
         if row[3] == 1:  # row[3] is the is_global col
             site_id = "global"
+            URL = "-"
         else:
             site_id = row[1]  # row[1] is site_id col
+            URL = get_url_from_id(site_id)
 
-        print(f"\n{row[0]:<5}{site_id:<10}{row[2]}")
+        print(f"{row[0]:<5}{row[2]:<15}{site_id:<10}{URL[:30]}")  # did not limit length, may be messy if words are long, but I'd rather display the whole word
     print()  # prints one newline as its a different print()
 
     conn.commit()
@@ -73,7 +75,7 @@ def print_words():
 def print_global_words():
     print("\nID   WORD")
     for word in get_global_words():
-        print(f"\n{word[0]:<5}{word[2]}")
+        print(f"{word[0]:<5}{word[2]}")
     print() # prints one newline as its a different print()
 
     return 0
@@ -85,10 +87,11 @@ def print_non_global_words():
     cursor.execute("SELECT * FROM site_words")
     rows = cursor.fetchall()
 
-    print("\nID   WORD")
+    print("\nID   WORD           SITE ID   URL")
     for row in rows:
         if row[3] == 0:  # row[3] is the is_global col
-            print(f"\n{row[0]:<5}{row[2]}")
+            URL = get_url_from_id(row[1])
+            print(f"{row[0]:<5}{row[2]:<15}{row[1]:<10}{URL[:30]}")
     print()  # prints one newline as its a different print()
 
     conn.commit()
@@ -112,7 +115,7 @@ def print_prev():
 
     return 0
 
-def print_url_id(id):
+def print_url_from_id(id):
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
@@ -130,6 +133,24 @@ def print_url_id(id):
     conn.close()
 
     return 0
+
+def get_url_from_id(id):
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "SELECT url FROM sites WHERE id = ?",
+        (id,)
+    )
+    url_get = cursor.fetchone()
+
+    conn.commit()
+    conn.close()
+
+    if url_get is None:
+        return "-"
+
+    return url_get[0]
 
 def get_urls():
     conn = sqlite3.connect(DB_PATH)
