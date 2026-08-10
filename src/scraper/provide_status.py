@@ -20,7 +20,7 @@ def provide_status():
             elif output == 2:  # word found
                 print_out += f"\t{GREEN}Application found!{RESET}"
                 found_application(URL)
-        print_out += "\n\n"
+        print_out += "\n"
         print(f"{print_out}")
         update_prev_print(print_out)  # updates variable to be used in cli
         time.sleep(5)  # SCRAPING_FREQUENCY*60*60

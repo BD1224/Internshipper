@@ -19,17 +19,17 @@ def handle_input(user_input):
             mc.delete()
         case "url":
             if len(user_input) < 3:
-                print("\n\ncommand failed\n\n")
+                print("\nCommand failed\n")
                 return 0
             uc.handle_url(user_input)
         case "word":
             if len(user_input) < 3:
-                print("\n\ncommand failed\n\n")
+                print("\nCommand failed\n")
                 return 0
             wc.handle_word(user_input)
         case "print":
             if len(user_input) < 2:
-                print("\n\ncommand failed\n\n")
+                print("\nCommand failed\n")
                 return 0
             pc.handle_print(user_input)
 

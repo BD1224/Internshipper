@@ -35,13 +35,13 @@ def print_data():
         if site[0] not in words_by_site:
             words_by_site[site[0]] = []  # creates empty list for sites with no words
         print(
-            f"\n{site[0]:<5}"
+            f"{site[0]:<5}"
             f"{site[1][:30]:<30}   "
             f"{color}{found_application:<8}{RESET}"
             f"{includes_globals:<9}"
             f"{words_by_site[site[0]]}"
         )
-    print("\n")
+    print()  # prints one newline as its a different print()
 
     conn.commit()
     conn.close()
@@ -55,7 +55,7 @@ def print_words():
     cursor.execute("SELECT * FROM site_words")
     rows = cursor.fetchall()
 
-    print("\n\nID   SITE ID   WORD")
+    print("\nID   SITE ID   WORD")
     for row in rows:
         if row[3] == 1:  # row[3] is the is_global col
             site_id = "global"
@@ -63,7 +63,7 @@ def print_words():
             site_id = row[1]  # row[1] is site_id col
 
         print(f"\n{row[0]:<5}{site_id:<10}{row[2]}")
-    print("\n\n")
+    print()  # prints one newline as its a different print()
 
     conn.commit()
     conn.close()
@@ -71,10 +71,10 @@ def print_words():
     return 0
 
 def print_global_words():
-    print("\n\nID   WORD")
+    print("\nID   WORD")
     for word in get_global_words():
         print(f"\n{word[0]:<5}{word[2]}")
-    print("\n\n")
+    print() # prints one newline as its a different print()
 
     return 0
 
@@ -85,11 +85,11 @@ def print_non_global_words():
     cursor.execute("SELECT * FROM site_words")
     rows = cursor.fetchall()
 
-    print("\n\nID   WORD")
+    print("\nID   WORD")
     for row in rows:
         if row[3] == 0:  # row[3] is the is_global col
             print(f"\n{row[0]:<5}{row[2]}")
-    print("\n\n")
+    print()  # prints one newline as its a different print()
 
     conn.commit()
     conn.close()
