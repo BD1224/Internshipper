@@ -262,10 +262,17 @@ def add_word(site_id, word):
     cursor = conn.cursor()
 
     cursor.execute(
-        "INSERT INTO site_words (site_id, word, is_global) VALUES (?, ?, ?)",
-        (site_id, word, False)
+        "SELECT * FROM sites WHERE id = ?",  # checks if site exists
+        (site_id,)
     )
-    ret = cursor.rowcount
+    if len(cursor.fetchall()) != 0:  # how many it found (should be 1 if no error)
+        cursor.execute(
+            "INSERT INTO site_words (site_id, word, is_global) VALUES (?, ?, ?)",
+            (site_id, word, False)
+        )
+        ret = cursor.rowcount
+    else:  # if there are no sites with that site_id
+        ret = 0
 
     conn.commit()
     conn.close()
