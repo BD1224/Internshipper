@@ -17,6 +17,7 @@ print urls: prints urls and their data\n
 close: stops application from running
 help: gets you here
 inst: displays instructions
+clear: clears screen
     """)
 
 def print_inst():
@@ -50,3 +51,8 @@ def delete():
         print("Everything deleted\n")
     else:
         print("Did not delete\n")
+
+def clear():
+    import sys
+    sys.stdout.write("\033[2J\033[H\033[3J")  # clears screen, sets cursor to top left and removes scrollback
+    sys.stdout.flush()  # handles anything in buffer

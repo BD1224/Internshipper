@@ -13,6 +13,8 @@ def handle_input(user_input):
             mc.print_help()
         case "inst":
             mc.print_inst()
+        case "clear":
+            mc.clear()
         case "deleteall":
             mc.delete()
         case "url":
