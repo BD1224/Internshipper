@@ -290,7 +290,7 @@ def include_global_words(site_id, bool):
     elif bool=="f":
         set_to = False
     else:
-        return 1
+        return 0
     
     cursor.execute(
         "UPDATE sites SET includes_global_words = ? WHERE id = ?",

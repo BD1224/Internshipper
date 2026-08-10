@@ -5,24 +5,24 @@ def handle_url(user_input):
         case "add":
             output = db.add_url(user_input[2])
             if output==0:
-                print("\n\ndid not add\n\n")
+                print("\nDid not add\n")
             else:
-                print("\n\nadded\n\n")
+                print("\nAdded\n")
         case "rid":
             output = db.remove_url(user_input[2])
             if output==0:
-                print("\n\ndid not remove\n\n")
+                print("\nDid not remove\n")
             else:
-                print("\n\nremoved\n\n")
+                print("\nRemoved\n")
         case "gid":
             if len(user_input) < 4:
-                print("\n\ncommand failed\n\n")
+                print("\nCommand failed\n")
                 return 0
             output = db.include_global_words(user_input[2], user_input[3])
             if output==0:
-                print("\n\ndid not remove\n\n")
+                print("\nDid not update\n")
             else:
-                print("\n\nremoved\n\n")
+                print("\nUpdated\n")
         case "print":
             db.print_url_id(user_input[2])
             
