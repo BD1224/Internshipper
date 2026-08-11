@@ -124,28 +124,28 @@ URLs
 
 Add a URL:
 
-url add '<url>'
+url add `<url>`
 
 Remove a URL:
 
-url rm '<id>'
+url rm `<id>`
 
 Enable or disable global words for a URL:
 
-url global '<id> <t or f>'
+url global `<id> <t or f>`
 
 * t — use global words
 * f — ignore global words
 
 Print a specific URL:
 
-url print '<id>'
+url print `<id>`
 
 Words
 
 Add a word or phrase to a specific URL:
 
-word add '<url_id> <word>'
+word add `<url_id> <word>`
 
 Example:
 
@@ -153,15 +153,15 @@ word add 2 "software developer"
 
 Remove a tracked word by its word ID:
 
-word rm '<word_id>'
+word rm `<word_id>`
 
 Remove every occurrence of a particular word or phrase:
 
-word remove '<word>'
+word remove `<word>`
 
 Add a global word or phrase:
 
-word gadd '<word>'
+word gadd `<word>`
 
 Example:
 
@@ -205,7 +205,7 @@ Copy the URL containing those search results.
 
 Then add it:
 
-url add '<career-search-url>'
+url add `<career-search-url>`
 
 Add the actual job wording you want to detect:
 
