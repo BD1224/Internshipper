@@ -14,6 +14,8 @@ print words: prints all words tracked
 print gwords: prints all global words
 print ngwords: prints all non-global words
 print urls: prints urls and their data\n
+clean urls: permanently removes urls which have found a word
+clean words: removes non-global words whose urls are non-existent or found a word\n
 close: stops application from running
 help: gets you here
 inst: displays instructions

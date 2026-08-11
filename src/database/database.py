@@ -382,3 +382,35 @@ def delete_all():
     conn.close()
 
     return 0
+
+def clean_urls():
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "DELETE FROM sites WHERE found_application = ?",
+        (True,)
+    )
+
+    conn.commit()
+    conn.close()
+
+    return 0
+
+def clean_words():
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        DELETE FROM site_words
+        WHERE is_global = ?
+        AND site_id NOT IN (
+            SELECT id FROM sites WHERE found_application = ?
+        )""",
+        (False, False)
+    )  # deletes words which are not global and not in the list of urls which havent found a word
+
+    conn.commit()
+    conn.close()
+
+    return 0

@@ -2,6 +2,7 @@ import src.cli.url_commands as uc
 import src.cli.word_commands as wc
 import src.cli.print_commands as pc
 import src.cli.misc_commands as mc
+import src.cli.clean_commands as cc
 
 
 def handle_input(user_input):
@@ -32,6 +33,11 @@ def handle_input(user_input):
                 print("\nCommand failed\n")
                 return 0
             pc.handle_print(user_input)
+        case "clean":
+            if len(user_input) < 2:
+                print("\nCommand failed\n")
+                return 0
+            cc.handle_clean(user_input)
 
     return 0
 
