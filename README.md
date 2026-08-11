@@ -189,7 +189,7 @@ Print URLs and their associated data:
 
 `print urls`
 
-Example Workflow
+#### Example Workflow
 
 Suppose you want to monitor a company’s careers page for software development internships.
 
@@ -223,7 +223,7 @@ The important distinction is that the career-site search can be broad, while the
 
 This reduces false positives while still allowing the company’s career search to return a broad range of potentially relevant jobs.
 
-Limitations
+#### Limitations
 
 The Internshipper only checks the jobs displayed on the URL you provide. If a career site splits its results across multiple pages, jobs on later pages may not be checked.
 
