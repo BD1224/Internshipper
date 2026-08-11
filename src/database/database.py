@@ -11,7 +11,8 @@ def print_data():
     rows = cursor.fetchall()
     words_by_site = {}  # dict with key site_id: value list of words
     for row in rows:
-        if row[3] == 0:  # row[3] is the is_global col
+        is_global = row[3]
+        if is_global == 0:
             site_id = row[1]
             if site_id not in words_by_site:  # searches keys
                 words_by_site[site_id] = []  # adds list if not a key
@@ -22,6 +23,8 @@ def print_data():
     sites = cursor.fetchall()
     print("\nID   URL" + " " * 30 + "FOUND?  GLOBAL?  WORDS")
     for site in sites:
+        url_id = site[0]
+        URL = site[1]
         if site[2] == 1:
             found_application = "YES"
             color = GREEN
@@ -35,11 +38,11 @@ def print_data():
         if site[0] not in words_by_site:
             words_by_site[site[0]] = []  # creates empty list for sites with no words
         print(
-            f"{site[0]:<5}"
-            f"{site[1][:30]:<33}"
+            f"{url_id:<5}"
+            f"{URL[:30]:<33}"
             f"{color}{found_application:<8}{RESET}"
             f"{includes_globals:<9}"
-            f"{words_by_site[site[0]]}"
+            f"{",".join(words_by_site[site[0]])}"
         )
     print()  # prints one newline as its a different print()
 
@@ -57,14 +60,17 @@ def print_words():
 
     print("\nID   WORD           SITE ID   URL")
     for row in rows:
-        if row[3] == 1:  # row[3] is the is_global col
+        word_id = row[0]
+        word = row[2]
+        is_global = row[3]
+        if is_global == 1:
             site_id = "global"
             URL = "-"
         else:
             site_id = row[1]  # row[1] is site_id col
             URL = get_url_from_id(site_id)
 
-        print(f"{row[0]:<5}{row[2]:<15}{site_id:<10}{URL[:30]}")  # did not limit length, may be messy if words are long, but I'd rather display the whole word
+        print(f"{word_id:<5}{word:<15}{site_id:<10}{URL[:30]}")  # did not limit length, may be messy if words are long, but I'd rather display the whole word
     print()  # prints one newline as its a different print()
 
     conn.commit()
@@ -74,8 +80,10 @@ def print_words():
 
 def print_global_words():
     print("\nID   WORD")
-    for word in get_global_words():
-        print(f"{word[0]:<5}{word[2]}")
+    for row in get_global_words():
+        word_id = row[0]
+        word = row[2]
+        print(f"{word_id:<5}{word}")
     print() # prints one newline as its a different print()
 
     return 0
@@ -89,9 +97,13 @@ def print_non_global_words():
 
     print("\nID   WORD           SITE ID   URL")
     for row in rows:
-        if row[3] == 0:  # row[3] is the is_global col
+        word_id = row[0]
+        site_id = row[1]
+        word = row[2]
+        is_global = row[3]
+        if is_global == 0:
             URL = get_url_from_id(row[1])
-            print(f"{row[0]:<5}{row[2]:<15}{row[1]:<10}{URL[:30]}")
+            print(f"{word_id:<5}{word:<15}{site_id:<10}{URL[:30]}")
     print()  # prints one newline as its a different print()
 
     conn.commit()
