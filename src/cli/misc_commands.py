@@ -20,6 +20,7 @@ close: stops application from running
 help: gets you here
 inst: displays instructions
 clear: clears screen
+run: immediately checks all tracked URLs for any tracked words or phrases.
     """)
 
 def print_inst():
