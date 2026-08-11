@@ -1,10 +1,10 @@
-The Internshipper
+# The Internshipper
 
 The Internshipper is a local command-line tool that monitors company career pages for internships and other job openings. You provide the career-page URLs and the words or phrases you want to look for, and the program periodically checks those pages for matches.
 
 The goal is to avoid repeatedly checking dozens of company career pages manually.
 
-How It Works
+## How It Works
 
 For each company you want to track:
 
@@ -16,7 +16,7 @@ For each company you want to track:
 
 The program checks the page for the words or phrases you provide and reports a match if it finds at least one of them. It does not require every tracked word or phrase to appear on the page.
 
-Finding the Right URL
+## Finding the Right URL
 
 Whenever possible, use the URL produced by the company’s own career search.
 
@@ -32,7 +32,7 @@ intern Boston
 
 Then copy the resulting URL and add it to The Internshipper. Then, in The Internshipper, add a word or phrase such as analyst, software, or another term that describes the specific internship you want. The program will check that internship results page for the term you provide and report when it finds a matching position.
 
-Searching for Broader Job Categories
+## Searching for Broader Job Categories
 
 For broader job categories, it can be useful to search for only part of the job title on the company’s career site.
 
@@ -67,7 +67,7 @@ Tracked word:       software developer
 
 Use the broad search to make the career page return more possible jobs, and use the more specific tracked phrase to decide whether an actual job you care about appears.
 
-Tracking Phrases
+## Tracking Phrases
 
 Words do not have to be a single word. Put text inside quotation marks ("") when you want it treated as one phrase in a command.
 
@@ -86,7 +86,7 @@ Other examples include:
 
 Using phrases is especially useful when a single word would produce too many unrelated matches.
 
-Global and Non-Global Words
+## Global and Non-Global Words
 
 A global word is searched for by every URL that is configured to use global words.
 
@@ -110,34 +110,42 @@ finance
 
 A URL can also be configured to ignore global words. If global words are disabled for a URL, that URL will only look for its own non-global words.
 
-Commands
+## Commands
+
+Run
+
+Manually run The Internshipper at any time:
+
+run
+
+This immediately checks all tracked URLs for any tracked words or phrases.
 
 URLs
 
 Add a URL:
 
-url add <url>
+url add '<url>'
 
 Remove a URL:
 
-url rm <id>
+url rm '<id>'
 
 Enable or disable global words for a URL:
 
-url global <id> <t or f>
+url global '<id> <t or f>'
 
 * t — use global words
 * f — ignore global words
 
 Print a specific URL:
 
-url print <id>
+url print '<id>'
 
 Words
 
 Add a word or phrase to a specific URL:
 
-word add <url_id> <word>
+word add '<url_id> <word>'
 
 Example:
 
@@ -145,15 +153,15 @@ word add 2 "software developer"
 
 Remove a tracked word by its word ID:
 
-word rm <word_id>
+word rm '<word_id>'
 
 Remove every occurrence of a particular word or phrase:
 
-word remove <word>
+word remove '<word>'
 
 Add a global word or phrase:
 
-word gadd <word>
+word gadd '<word>'
 
 Example:
 
@@ -197,7 +205,7 @@ Copy the URL containing those search results.
 
 Then add it:
 
-url add <career-search-url>
+url add '<career-search-url>'
 
 Add the actual job wording you want to detect:
 
