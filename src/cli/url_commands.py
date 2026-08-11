@@ -8,13 +8,13 @@ def handle_url(user_input):
                 print("\nDid not add\n")
             else:
                 print("\nAdded\n")
-        case "rid":
+        case "remove":
             output = db.remove_url(user_input[2])
             if output==0:
                 print("\nDid not remove\n")
             else:
                 print("\nRemoved\n")
-        case "gid":
+        case "global":
             if len(user_input) < 4:
                 print("\nCommand failed\n")
                 return 0

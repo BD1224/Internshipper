@@ -11,13 +11,13 @@ def handle_word(user_input):
                 print("\nDid not add\n")
             else:
                 print("\nAdded\n")
-        case "rid":
+        case "remove":
             output = db.remove_word_id(user_input[2])
             if output==0:
                 print("\nDid not remove\n")
             else:
                 print("\nRemoved\n")
-        case "r":
+        case "removeall":
             output = db.remove_word(user_input[2])
             if output==0:
                 print("\nDid not remove\n")

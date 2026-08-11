@@ -2,15 +2,15 @@ def print_help():
     print("""
 Commands:\n
 url add <url>: adds <url> to list of tracked urls
-url rid <id>: removes url listed as <id>
-url gid <id> <t or f>: sets whether url listed as <id> uses(t) or ignores(f) global words
-url print <id>: prints the url with corresponding <id>\n
-word add <id> <word>: adds <word> to be tracked by url listed as <id>
-word rid <id>: removes word listed as <id> (different from url id)
-word r <word>: removes <word>, this will remove all occurences of <word>
-word gadd <word>: adds <word> to be tracked globally\n
+url remove <id>: removes url with <id>
+url global <id> <t or f>: enables(t) or disables(f) global words for the url with <id>
+url print <id>: prints the url with <id>\n
+word add <id> <word>: adds <word> to the url with <id>
+word remove <id>: removes words with <id> 
+word removeall <word>: removes all occurences of <word>
+word gadd <word>: adds <word> as a global word\n
 print prev: prints previous result
-print words: prints all words tracked
+print words: prints all tracked words
 print gwords: prints all global words
 print ngwords: prints all non-global words
 print urls: prints urls and their data\n
