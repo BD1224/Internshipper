@@ -112,82 +112,82 @@ A URL can also be configured to ignore global words. If global words are disable
 
 ## Commands
 
-Run
+#### Run
 
 Manually run The Internshipper at any time:
 
-run
+`run`
 
 This immediately checks all tracked URLs for any tracked words or phrases.
 
-URLs
+#### URLs
 
 Add a URL:
 
-url add `<url>`
+`url add <url>`
 
 Remove a URL:
 
-url rm `<id>`
+`url rm <id>`
 
 Enable or disable global words for a URL:
 
-url global `<id> <t or f>`
+`url global <id> <t or f>`
 
 * t — use global words
 * f — ignore global words
 
 Print a specific URL:
 
-url print `<id>`
+`url print <id>`
 
-Words
+#### Words
 
 Add a word or phrase to a specific URL:
 
-word add `<url_id> <word>`
+`word add <url_id> <word>`
 
 Example:
 
-word add 2 "software developer"
+`word add 2 "software developer"`
 
 Remove a tracked word by its word ID:
 
-word rm `<word_id>`
+`word rm <word_id>`
 
 Remove every occurrence of a particular word or phrase:
 
-word remove `<word>`
+`word remove <word>`
 
 Add a global word or phrase:
 
-word gadd `<word>`
+`word gadd <word>`
 
 Example:
 
-word gadd "summer analyst"
+`word gadd "summer analyst"`
 
-Printing Information
+#### Printing Information
 
 Print the previous result:
 
-print prev
+`print prev`
 
 Print all tracked words:
 
-print words
+`print words`
 
 Print global words:
 
-print gwords
+`print gwords`
 
 Print non-global words:
 
-print ngwords
+`print ngwords`
 
 Print URLs and their associated data:
 
-print urls
+`print urls`
 
 Example Workflow
 
@@ -205,15 +205,19 @@ Copy the URL containing those search results.
 
 Then add it:
 
-url add `<career-search-url>`
+`url add <career-search-url>`
+
+Find the URL id by printing the URLs: 
+
+`print urls`
 
 Add the actual job wording you want to detect:
 
-word add 1 "software developer"
+`word add 1 "software developer"`
 
 You could also add:
 
-word add 1 "software development intern"
+`word add 1 "software development intern"`
 
 The important distinction is that the career-site search can be broad, while the tracked phrase should be specific enough to identify a real position.
 
