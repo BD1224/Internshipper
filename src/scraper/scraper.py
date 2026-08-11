@@ -8,8 +8,8 @@ def scrape(URL, words):
     except:
         return 0  # error
 
-    soup = BeautifulSoup(html.text, "html.parser")  # parses into words
-    text = soup.get_text(" ", strip=True).lower()  # creates list of words, in lowercase
+    soup = BeautifulSoup(html.text, "html.parser")  # creates soup object used to parse
+    text = soup.get_text(" ", strip=True).lower()  # creates string w/o html syntax
 
     for word in words:
         if word in text:
