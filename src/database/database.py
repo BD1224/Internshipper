@@ -58,7 +58,7 @@ def print_words():
     cursor.execute("SELECT * FROM site_words")
     rows = cursor.fetchall()
 
-    print("\nID   WORD           SITE ID   URL")
+    print("\nID   WORD            SITE ID   URL")
     for row in rows:
         word_id = row[0]
         word = row[2]
@@ -70,7 +70,7 @@ def print_words():
             site_id = row[1]  # row[1] is site_id col
             URL = get_url_from_id(site_id)
 
-        print(f"{word_id:<5}{word:<15}{site_id:<10}{URL[:30]}")  # did not limit length, may be messy if words are long, but I'd rather display the whole word
+        print(f"{word_id:<5}{word:<15} {site_id:<10}{URL[:30]}")  # did not limit length, may be messy if words are long, but I'd rather display the whole word
     print()  # prints one newline as its a different print()
 
     conn.commit()
@@ -95,7 +95,7 @@ def print_non_global_words():
     cursor.execute("SELECT * FROM site_words")
     rows = cursor.fetchall()
 
-    print("\nID   WORD           SITE ID   URL")
+    print("\nID   WORD            SITE ID   URL")
     for row in rows:
         word_id = row[0]
         site_id = row[1]
@@ -103,7 +103,7 @@ def print_non_global_words():
         is_global = row[3]
         if is_global == 0:
             URL = get_url_from_id(row[1])
-            print(f"{word_id:<5}{word:<15}{site_id:<10}{URL[:30]}")
+            print(f"{word_id:<5}{word:<15} {site_id:<10}{URL[:30]}")
     print()  # prints one newline as its a different print()
 
     conn.commit()
