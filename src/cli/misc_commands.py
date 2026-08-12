@@ -18,9 +18,25 @@ clean urls: permanently removes urls which have found a word
 clean words: removes non-global words whose urls are non-existent or found a word\n
 close: stops application from running
 help: gets you here
+basic: displays basic instructions (good when just starting out)
 inst: displays instructions
 clear: clears screen
 run: immediately checks all tracked URLs for any tracked words or phrases.
+    """)
+
+def print_basic():
+    print("""
+Basic commands:\n
+url add <url>: adds <url> to list of tracked urls
+url remove <id>: removes url with <id>
+word remove <id>: removes words with <id> 
+word gadd <word>: adds <word> as a global word\n
+print prev: prints previous result
+print words: prints all tracked words
+print urls: prints urls and their data\n
+close: stops application from running
+help: displays all commands
+inst: displays instructions
     """)
 
 def print_inst():

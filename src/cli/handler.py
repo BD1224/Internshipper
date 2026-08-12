@@ -16,6 +16,8 @@ def handle_input(user_input):
             return 1
         case "help":
             mc.print_help()
+        case "basic":
+            mc.print_basic()
         case "inst":
             mc.print_inst()
         case "clear":
