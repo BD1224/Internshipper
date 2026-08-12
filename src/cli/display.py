@@ -15,3 +15,6 @@ def display():
             output = handle_input(user_input)
         except ValueError:  # used ValueError to avoid ^C bug, where it doesnt exit
             continue
+        except EOFError:
+            print()  # EOF doesnt go to a new line when conitnuing
+            continue

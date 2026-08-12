@@ -1,14 +1,8 @@
-from config import RED, GREEN, RESET, SCRAPING_FREQUENCY
+from config import RED, GREEN, RESET
 from .scraper import scrape
 from database.database import get_urls, get_words, get_global_words, update_prev_print, found_application
-import time
 
 def provide_status():
-    while True:
-        run()
-        time.sleep(5)  # SCRAPING_FREQUENCY*60*60
-
-def run():
     print_out = ""
     for row in get_urls():
         site_id = row[0]  # id

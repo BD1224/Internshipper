@@ -7,7 +7,9 @@ import src.scraper.provide_status as sc
 
 
 def handle_input(user_input):
-
+    if len(user_input) < 1:
+        return 0
+    
     match user_input[0]:  # automatically breaks unlike C/Java
         case "close":
             mc.print_close()
@@ -20,7 +22,7 @@ def handle_input(user_input):
         case "deleteall":
             mc.delete()
         case "run":
-            sc.run()
+            sc.provide_status()
         case "url":
             if len(user_input) < 3:
                 print("\nCommand failed\n")
