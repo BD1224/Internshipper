@@ -8,7 +8,7 @@ def run_status(flag):  # flag is pass by reference
     flag.wait(wait_time)  # like sleep, but gets woken when flag is changed
 
     while not flag.is_set():  # is_set return if the flag is True/False
-        print("")
+        print()
         provide_status()
         print(">> ", end="", flush=True)  # prints this after the status, because the cli doesnt reprint
         flag.wait(wait_time)
@@ -23,7 +23,7 @@ def main():
     display() # on main thread run cli display. Will run until user types 'close'
 
     flag.set()  # sets flag to True/tells thread to stop
-    flag.join()  # waits for thread to return
+    scrape_thread.join()  # waits for thread to return
 
     return 0
 

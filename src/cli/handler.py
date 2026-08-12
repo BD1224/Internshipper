@@ -13,6 +13,7 @@ def handle_input(user_input):
     match user_input[0]:  # automatically breaks unlike C/Java
         case "close":
             mc.print_close()
+            return 1
         case "help":
             mc.print_help()
         case "inst":

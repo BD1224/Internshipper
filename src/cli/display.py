@@ -13,6 +13,8 @@ def display():
         try:  # shlex may throw an error if there is an unclosed quote
             user_input = shlex.split(input(">> ").lower())  # user_input is a list of inputs
             output = handle_input(user_input)
+            if output == 1:  # user typed close
+                return 0
         except ValueError:  # used ValueError to avoid ^C bug, where it doesnt exit
             continue
         except EOFError:
