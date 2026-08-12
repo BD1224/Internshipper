@@ -2,6 +2,7 @@ from cli.display import display
 from scraper.provide_status import provide_status
 from config import SCRAPING_FREQUENCY
 import threading
+import readline  # even though no code is written with this, it still controls input(), so keys like ^R dont print or interfere
 
 def run_status(flag, lock):  # flag is pass by reference
     wait_time = 3  # SCRAPING_FREQUENCY*60*60
