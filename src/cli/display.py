@@ -21,8 +21,8 @@ def display(recent_print_flag, lock):
                     output = handle_input(user_input)
                     if output == 1:  # user typed close
                         return 0
-        except ValueError:  # used ValueError to avoid ^C bug, where it doesnt exit
+        except (EOFError, KeyboardInterrupt):
+            print()  # EOF doesnt go to a new line when continuing, neither does ^C
             continue
-        except EOFError:
-            print()  # EOF doesnt go to a new line when conitnuing
+        except:
             continue
