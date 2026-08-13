@@ -4,7 +4,6 @@ from database.database import get_status, get_time
 from config import SCRAPING_FREQUENCY
 from prompt_toolkit.patch_stdout import patch_stdout
 import threading
-import readline  # even though no code is written with this, it still controls input(), so keys like ^R dont print or interfere
 
 def run_status(stop_flag, status_on_flag, lock):  # flag is pass by reference
     wait_time = 3  # SCRAPING_FREQUENCY*60*60
