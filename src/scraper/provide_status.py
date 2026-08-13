@@ -2,6 +2,9 @@ from config import RED, GREEN, RESET
 from .scraper import scrape
 from database.database import get_urls, get_words, get_global_words, update_prev_print, found_application
 
+from prompt_toolkit import print_formatted_text  # used to bypass the patch_stdout control of the ANSI codes
+from prompt_toolkit.formatted_text import ANSI
+
 def provide_status():
     print_out = ""
     for row in get_urls():
@@ -19,5 +22,5 @@ def provide_status():
             print_out += f"\t{GREEN}Application found!{RESET}"
             found_application(URL)
     print_out += "\n"
-    print(f"{print_out}")
+    print_formatted_text(ANSI(print_out))
     update_prev_print(print_out)  # updates variable to be used in cli

@@ -1,33 +1,40 @@
 from cli.display import display
 from scraper.provide_status import provide_status
+from database.database import get_status, get_time
 from config import SCRAPING_FREQUENCY
+from prompt_toolkit.patch_stdout import patch_stdout
 import threading
 import readline  # even though no code is written with this, it still controls input(), so keys like ^R dont print or interfere
 
-def run_status(stop_flag, recent_print_flag, lock):  # flag is pass by reference
+def run_status(stop_flag, status_on_flag, lock):  # flag is pass by reference
     wait_time = 3  # SCRAPING_FREQUENCY*60*60
     stop_flag.wait(wait_time)  # like sleep, but gets woken when flag is changed
 
     while not stop_flag.is_set():  # is_set return if the flag is True/False
-        with lock:  # handles .aquire() and .release() and errors
-            recent_print_flag.set()  # tells other thread there was a recent print
-            print()
-            provide_status()
-            print("Press enter to continue ", end="", flush=True)  # prints this after the status, to avoid saved input buffer
-        stop_flag.wait(wait_time)
+        if status_on_flag.is_set():  # status is not turned on
+            with lock:  # handles .aquire() and .release() and errors
+                provide_status()
+            stop_flag.wait(wait_time)
+        else:  # status is not set
+            status_on_flag.wait()  # waits for user to type 'status on' to start running the status again
     return 0
 
 def main():
     stop_flag = threading.Event()  # communication between threads (default value is False)
-    recent_print_flag = threading.Event()
-    lock = threading.Lock()  # used to avoid clashes when outputting
+    status_on_flag = threading.Event()  # if user wants periodic status updates
+    if get_status() == "on":
+        status_on_flag.set()
+    print(f"{get_status()}")
+    lock = threading.Lock()  # makes sure the multiple print statements are run correctly (std_patch avoids clashes)
 
-    scrape_thread = threading.Thread(target=run_status, args=(stop_flag, recent_print_flag, lock))  # define thread
+    scrape_thread = threading.Thread(target=run_status, args=(stop_flag, status_on_flag, lock))  # define thread
     scrape_thread.start()  # run thread
 
-    display(recent_print_flag, lock) # on main thread run cli display. Will run until user types 'close'
+    with patch_stdout():  # manages locks, avoids clashes
+        display(status_on_flag, lock) # on main thread run cli display. Will run until user types 'close'
 
     stop_flag.set()  # sets flag to True/tells thread to stop
+    status_on_flag.set()  # set so that run_status doesnt wait forever
     scrape_thread.join()  # waits for thread to return
 
     return 0

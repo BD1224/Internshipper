@@ -16,12 +16,17 @@ print ngwords: prints all non-global words
 print urls: prints urls and their data\n
 clean urls: permanently removes urls which have found a word
 clean words: removes non-global words whose urls are non-existent or found a word\n
+status on: turns on periodic status update
+status off: turns off periodic status update
+status time <hour>: sets the daily status update at <hour> (military time)
+status show: display current status settings\n
 close: stops application from running
 help: gets you here
 basic: displays basic instructions (good when just starting out)
 inst: displays instructions
 clear: clears screen
-run: immediately checks all tracked URLs for any tracked words or phrases.
+run: immediately checks all tracked URLs for any tracked words or phrases
+deleteall: use with caution, deletes all urls and words (cannot be taken back)
     """)
 
 def print_basic():
@@ -73,5 +78,5 @@ def delete():
 
 def clear():
     import sys
-    sys.stdout.write("\033[2J\033[H\033[3J")  # clears screen, sets cursor to top left and removes scrollback
-    sys.stdout.flush()  # handles anything in buffer
+    sys.__stdout__.write("\033[2J\033[H\033[3J")  # __stdout__ bypasses the control patch_stdout() has, which wouldnt allow this to print
+    sys.__stdout__.flush()

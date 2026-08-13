@@ -414,3 +414,75 @@ def clean_words():
     conn.close()
 
     return 0
+
+def status(toggle):
+    if not (toggle == True or toggle==False):
+        return 0
+    print(f"{toggle} is the value status is being set to")
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "UPDATE settings SET value = ? WHERE key = ?",
+        (toggle, "status_on")
+    )
+
+    conn.commit()
+    conn.close()
+
+    return 0
+
+def get_status():
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "SELECT value FROM settings WHERE key = ?",
+        ("status_on",)
+    )
+    value = cursor.fetchone()
+
+    conn.commit()
+    conn.close()
+
+    if value[0]=="1":  # value turns into a string because it that is how it is defined in init_db
+        return "on"
+    else:
+        return "off"
+
+def set_time(input):
+    try:
+        time = int(input)
+    except:
+        return 0
+
+    if time < 0 or time >=24:
+        return 0  # invalid time
+
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "UPDATE settings SET value = ? WHERE key = ?",
+        (time, "status_time")
+    )
+
+    conn.commit()
+    conn.close()
+
+    return 1
+
+def get_time():
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "SELECT value FROM settings WHERE key = ?",
+        ("status_time",)
+    )
+    value = cursor.fetchone()
+
+    conn.commit()
+    conn.close()
+
+    return value[0]

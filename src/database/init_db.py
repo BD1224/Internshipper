@@ -34,9 +34,9 @@ def init_db():
     """)  # table for single variables
 
     cursor.execute(
-        "INSERT INTO settings (key, value) VALUES (?, ?)",
-        ("prev_print", "")
-    )  # starts tracking the previous print
+        "INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?), (?, ?), (?, ?)",
+        ("prev_print", "", "status_on", True, "status_time", 6)
+    )  # starts tracking the previous print, whether the user wants status updates, and what time they want it
 
     conn.commit()  # save
     conn.close()

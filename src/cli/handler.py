@@ -3,7 +3,8 @@ import src.cli.word_commands as wc
 import src.cli.print_commands as pc
 import src.cli.misc_commands as mc
 import src.cli.clean_commands as cc
-import src.scraper.provide_status as sc
+import src.cli.status_commands as sc
+import src.scraper.provide_status as ps
 
 
 def handle_input(user_input):
@@ -25,7 +26,7 @@ def handle_input(user_input):
         case "deleteall":
             mc.delete()
         case "run":
-            sc.provide_status()
+            ps.provide_status()
         case "url":
             if len(user_input) < 3:
                 print("\nCommand failed\n")
@@ -46,6 +47,11 @@ def handle_input(user_input):
                 print("\nCommand failed\n")
                 return 0
             cc.handle_clean(user_input)
+        case "status":
+            if len(user_input) < 2:
+                print("\nCommand failed\n")
+                return 0
+            return sc.handle_status(user_input)
 
     return 0
 
