@@ -12,14 +12,15 @@ def provide_status():
         URL = row[1]
         words = get_global_words() + get_words(site_id)  # did it this way to separate db from logic
         words = [word[2] for word in words]  # separates out just the word text
-        output = scrape(URL, words)
+        result = scrape(URL, words)
+        output = result[0]
         print_out += f"\n{URL}\n"
         if output == 0:  # exited with error
             print_out += f"\t{RED}Error: unable to fetch{RESET}"
         elif output == 1:  # no words found
             print_out += f"\tNo application found"
         elif output == 2:  # word found
-            print_out += f"\t{GREEN}Application found!{RESET}"
+            print_out += f"\t{GREEN}\"{result[1]}\" found!{RESET}"
             found_application(URL)
     print_out += "\n"
     print_formatted_text(ANSI(print_out))
