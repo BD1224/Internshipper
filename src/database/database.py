@@ -418,7 +418,7 @@ def clean_words():
 def status(toggle):
     if not (toggle == True or toggle==False):
         return 0
-    print(f"{toggle} is the value status is being set to")
+
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 

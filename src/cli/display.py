@@ -2,7 +2,7 @@ import shlex  # used to handle inputs with quotes
 from .handler import handle_input
 from prompt_toolkit import prompt
 
-def display(status_on_flag, lock):
+def display(status_on_flag, new_time_flag, lock):
     print(
         "************************************************\n"
         "Welcome to internshipper! Type help for commands\n"
@@ -20,6 +20,8 @@ def display(status_on_flag, lock):
                     status_on_flag.clear()
                 if output == 3:  # user typed status on
                     status_on_flag.set()
+                if output == 4:  # user set to a new time
+                    new_time_flag.set()
         except (EOFError, KeyboardInterrupt):
             print()  # EOF doesnt go to a new line when continuing, neither does ^C
             continue

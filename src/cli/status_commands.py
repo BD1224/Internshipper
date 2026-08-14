@@ -21,6 +21,7 @@ def handle_status(user_input):
                 print("\nCommand failed\n")
             else:
                 print(f"\nSet status update time to {time}\n")
+                return 4
         case "show":
             status = db.get_status()
             time = db.get_time()
