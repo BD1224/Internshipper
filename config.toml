@@ -1,6 +1,4 @@
 # using a config.toml to keep standard best practice
-[general]
-SCRAPING_FREQUENCY = 6 # saved as an int in python
 
 [colors]  # ANSI color code
 RED = '\033[31m'

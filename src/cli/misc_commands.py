@@ -18,7 +18,7 @@ clean urls: permanently removes urls which have found a word
 clean words: removes non-global words whose urls are non-existent or found a word\n
 status on: turns on periodic status update
 status off: turns off periodic status update
-status time <hour>: sets the daily status update at <hour> (military time)
+status time <hour>: sets the daily status update at <hour> (military time), may take a day to update
 status show: display current status settings\n
 close: stops application from running
 help: gets you here

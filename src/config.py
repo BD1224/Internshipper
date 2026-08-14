@@ -8,8 +8,6 @@ CONFIG_PATH = PROJECT_ROOT / "config.toml"
 with open(CONFIG_PATH, "rb") as f:  # with is a context manager it ensures it gets closed even with error
     config = tomllib.load(f)
 
-SCRAPING_FREQUENCY = config['general']['SCRAPING_FREQUENCY']
-
 RED = config['colors']['RED'].encode().decode('unicode_escape')
 GREEN = config['colors']['GREEN'].encode().decode('unicode_escape')
 RESET = config['colors']['RESET'].encode().decode('unicode_escape')
