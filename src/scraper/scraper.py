@@ -1,18 +1,16 @@
 import requests  # to download pages html
-from playwright.sync_api import sync_playwright  # fallback if requests doesnt work
 from bs4 import BeautifulSoup  # to parse that html
 from database.database import increment_consecutive_fails, get_consecutive_fails
 
-def scrape(URL, words):  # returns tuple, for easier parsing of result
+def scrape(URL, words, browser):  # returns tuple, for easier parsing of result
     if get_consecutive_fails(URL) < 3:
         result = request_scrape(URL, words)
         if result[0] == 0:
-            print("REQUESTS FAILED\n")
             increment_consecutive_fails(URL)
         if result[0] == 2:
             return result
-    print("USED PLAYWRITE\n")
-    return playwright_scrape(URL, words)
+
+    return playwright_scrape(URL, words, browser)
 
 def request_scrape(URL, words):
     try:
@@ -22,18 +20,20 @@ def request_scrape(URL, words):
     except:
         return (0,)  # error
 
-def playwright_scrape(URL, words):
-    with sync_playwright() as p:
-        try:
-            browser = p.chromium.launch(headless=True)
-            page = browser.new_page()
-            page.goto(URL, wait_until="networkidle", timeout=10000)
-            html = page.content()  # rendered html, after js has run
-            return check_text(html, words)
-        except:
-            return (0,)  # error
-        finally:
-            browser.close()  # browser always closes
+def playwright_scrape(URL, words, browser):
+    try:
+        page = browser.new_page()  # browser is shared across urls, only the page is per-url now
+    except:
+        return (0,)  # browser itself failed to open a page (eg. crashed/disconnected)
+
+    try:
+        page.goto(URL, wait_until="networkidle", timeout=10000)
+        html = page.content()  # rendered html, after js has run
+        return check_text(html, words)
+    except:
+        return (0,)  # error
+    finally:
+        page.close()  # closes just this page, browser stays open for the next url
 
 def check_text(html, words):
     soup = BeautifulSoup(html, "html.parser")  # creates soup object used to parse
