@@ -2,6 +2,9 @@
 import sqlite3
 from config import DB_PATH, RESET, GREEN
 
+from prompt_toolkit import print_formatted_text  # used to bypass the patch_stdout control of the ANSI codes
+from prompt_toolkit.formatted_text import ANSI
+
 def print_data():
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
@@ -21,7 +24,7 @@ def print_data():
     # print data and corresponding words
     cursor.execute("SELECT * FROM sites")
     sites = cursor.fetchall()
-    print("\nID   URL" + " " * 30 + "FOUND?  GLOBAL?  WORDS")
+    print_formatted_text("\nID   URL" + " " * 30 + "FOUND?  GLOBAL?  WORDS")
     for site in sites:
         url_id = site[0]
         URL = site[1]
@@ -37,13 +40,13 @@ def print_data():
             includes_globals = "NO"
         if site[0] not in words_by_site:
             words_by_site[site[0]] = []  # creates empty list for sites with no words
-        print(
+        print_formatted_text(ANSI(
             f"{url_id:<5}"
             f"{URL[:30]:<33}"
             f"{color}{found_application:<8}{RESET}"
             f"{includes_globals:<9}"
             f"{",".join(words_by_site[site[0]])}"
-        )
+        ))
     print()  # prints one newline as its a different print()
 
     conn.commit()
@@ -479,6 +482,57 @@ def get_time():
     cursor.execute(
         "SELECT value FROM settings WHERE key = ?",
         ("status_time",)
+    )
+    value = cursor.fetchone()
+
+    conn.commit()
+    conn.close()
+
+    return value[0]
+
+def increment_consecutive_fails(URL):
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "UPDATE sites SET consecutive_fails = consecutive_fails + 1 WHERE url = ? RETURNING consecutive_fails",
+        (URL,)
+    )
+    consecutive_fails = cursor.fetchone()
+
+    if consecutive_fails >=3:
+        cursor.execute(
+            "UPDATE sites SET use_playwrite = 1 WHERE url = ?",
+            (URL,)
+        )
+
+    conn.commit()
+    conn.close()
+
+    return 1
+
+def reset_consecutive_fails(URL):
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        UPDATE sites SET consecutive_fails = 0 WHERE url = ?
+        UPDATE sites SET use_playwrite = 0 WHERE url = ?
+    """, (URL,URL)
+    )
+
+    conn.commit()
+    conn.close()
+
+    return 1
+
+def get_consecutive_fails(URL):
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "SELECT consecutive_fails FROM sites WHERE url = ?",
+        (URL,)
     )
     value = cursor.fetchone()
 

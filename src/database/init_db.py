@@ -9,16 +9,17 @@ def init_db():
 
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS sites (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id INTEGER PRIMARY KEY,
             url TEXT NOT NULL,
             found_application BOOLEAN NOT NULL DEFAULT 0,
-            includes_global_words BOOLEAN NOT NULL DEFAULT 1
+            includes_global_words BOOLEAN NOT NULL DEFAULT 1,
+            consecutive_fails INTEGER NOT NULL DEFAULT 0
         )
     """)  # creates table if doesnt already exist
 
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS site_words (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id INTEGER PRIMARY KEY,
             site_id INTEGER,
             word TEXT NOT NULL,
             is_global BOOLEAN NOT NULL DEFAULT 1

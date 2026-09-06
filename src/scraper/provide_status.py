@@ -14,7 +14,7 @@ def provide_status():
         words = [word[2] for word in words]  # separates out just the word text
         result = scrape(URL, words)
         output = result[0]
-        print_out += f"\n{URL}\n"
+        print_out += f"{URL}\n"
         if output == 0:  # exited with error
             print_out += f"\t{RED}Error: unable to fetch{RESET}"
         elif output == 1:  # no words found
@@ -22,6 +22,9 @@ def provide_status():
         elif output == 2:  # word found
             print_out += f"\t{GREEN}\"{result[1]}\" found!{RESET}"
             found_application(URL)
+
+    if(print_out==""):
+        print_out = "All caught up"  ## FINISH THIS
     print_out += "\n"
     print_formatted_text(ANSI(print_out))
     update_prev_print(print_out)  # updates variable to be used in cli

@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 
 def get_next_call_time(last_call_time): 
     target_hour = int(get_time())  # get time will return a string(text) but it will always be a valid number
-    next_call_time = last_call_time.replace(hour=target_hour, minute=0, second=0, microsecond=0)
+    next_call_time = last_call_time.replace(hour=target_hour, minute=2, second=0, microsecond=0)
     if next_call_time <= last_call_time:  # if next target_hour is in the next day, shift target time to next day
         next_call_time += timedelta(days=1)  # timedelta is needed to add times
 
