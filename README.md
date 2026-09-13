@@ -6,10 +6,10 @@ The goal is to avoid repeatedly checking dozens of company career pages manually
 
 ## Getting Started
 
-First, clone this repository and open a terminal in its folder:
+First, open terminal. Then go to (cd) a folder where you want this project to be. clone this repository and open the folder with the following commands:
 
 ```
-git clone <this-repository-url>
+git clone https://github.com/BD1224/Internshipper.git
 cd internshipper
 ```
 
