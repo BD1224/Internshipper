@@ -4,6 +4,55 @@ The Internshipper is a local command-line tool that monitors company career page
 
 The goal is to avoid repeatedly checking dozens of company career pages manually.
 
+## Getting Started
+
+First, clone this repository and open a terminal in its folder:
+
+```
+git clone <this-repository-url>
+cd internshipper
+```
+
+There are two ways to run The Internshipper. Pick whichever is easier for you — both use the same `data/` folder, so your tracked URLs and words are shared between them.
+
+### Option 1: Run it directly on your computer (macOS or Linux)
+
+This requires Python (version 3.11 or newer) and `bash` already installed, which is why this option is macOS/Linux only. If you're on Windows, use Option 2 below instead.
+
+The first time only, set everything up:
+
+```
+source setup
+```
+
+This creates an isolated Python environment, installs the required packages, downloads the browser The Internshipper needs, and sets up the database.
+
+Every time after that, just run:
+
+```
+source run-local
+```
+
+Once it's running, you'll notice `(venv)` at the start of your terminal prompt — that just means the isolated Python environment is active. If you want to get rid of it after you're done, type `deactivate`.
+
+### Option 2: Run it in a container (macOS, Linux, or Windows)
+
+This requires [Podman](https://podman.io/) and `podman-compose` installed, but does **not** require Python — everything runs inside the container instead. If you're on macOS or Windows, you'll also need a running Podman machine (one-time setup: `podman machine init`, then `podman machine start` before each session).
+
+Every time you want to run the app:
+
+```
+source run-podman
+```
+
+There's no separate setup step for this option — the first run takes a little longer while it downloads what it needs, and every run after that is fast. You'll see some extra setup text scroll by each time you run it — that's just the container installing things inside itself, not on your computer, so there's nothing to worry about there.
+
+The container defaults to the `America/New_York` timezone, which affects when the daily status check runs. If you're in a different timezone, open `podman-compose.yml` and change the `TZ=America/New_York` line to your own timezone (e.g. `TZ=America/Los_Angeles`, `TZ=Europe/London`). This has to be set manually rather than detected automatically because Podman runs containers inside its own internal VM, which doesn't reliably share your computer's actual timezone.
+
+### Closing the app
+
+Whichever option you use, type `close` inside the app to stop it safely. Your tracked URLs and words are saved to a file on your computer either way, so closing the app — or restarting your computer — never loses your data, regardless of whether you last ran it locally or in a container.
+
 ## How It Works
 
 For each company you want to track:
@@ -112,84 +161,45 @@ A URL can also be configured to ignore global words. If global words are disable
 
 ## Commands
 
-#### Run
+Once the app is running, type `help` at any time to see the full list of commands. `basic` shows a shorter, beginner-friendly list to get started with. This is what `help` shows:
 
-Manually run The Internshipper at any time:
+```
+Commands:
 
-`run`
+url add <url>: adds <url> to list of tracked urls
+url remove <id>: removes url with <id>
+url global <id> <t or f>: enables(t) or disables(f) global words for the url with <id>
+url print <id>: prints the url with <id>
 
-This immediately checks all tracked URLs for any tracked words or phrases.
+word add <id> <word>: adds <word> to the url with <id>
+word remove <id>: removes words with <id>
+word removeall <word>: removes all occurences of <word>
+word gadd <word>: adds <word> as a global word
 
-#### URLs
+print prev: prints previous result
+print words: prints all tracked words
+print gwords: prints all global words
+print ngwords: prints all non-global words
+print urls: prints urls and their data
 
-Add a URL:
+clean urls: permanently removes urls which have found a word
+clean words: removes non-global words whose urls are non-existent or found a word
 
-`url add <url>`
+status on: turns on periodic status update
+status off: turns off periodic status update
+status set <hour>: sets the daily status update at <hour> (military time), may take a day to update
+status show: display current status settings
 
-Remove a URL:
+close: stops application from running
+help: gets you here
+basic: displays basic instructions (good when just starting out)
+inst: displays instructions
+clear: clears screen
+run: immediately checks all tracked URLs for any tracked words or phrases
+deleteall: use with caution, deletes all urls and words (cannot be taken back)
+```
 
-`url rm <id>`
-
-Enable or disable global words for a URL:
-
-`url global <id> <t or f>`
-
-* t — use global words
-* f — ignore global words
-
-Print a specific URL:
-
-`url print <id>`
-
-#### Words
-
-Add a word or phrase to a specific URL:
-
-`word add <url_id> <word>`
-
-Example:
-
-`word add 2 "software developer"`
-
-Remove a tracked word by its word ID:
-
-`word rm <word_id>`
-
-Remove every occurrence of a particular word or phrase:
-
-`word remove <word>`
-
-Add a global word or phrase:
-
-`word gadd <word>`
-
-Example:
-
-`word gadd "summer analyst"`
-
-#### Printing Information
-
-Print the previous result:
-
-`print prev`
-
-Print all tracked words:
-
-`print words`
-
-Print global words:
-
-`print gwords`
-
-Print non-global words:
-
-`print ngwords`
-
-Print URLs and their associated data:
-
-`print urls`
-
-#### Example Workflow
+### Example Workflow
 
 Suppose you want to monitor a company’s careers page for software development internships.
 
@@ -207,17 +217,13 @@ Then add it:
 
 `url add <career-search-url>`
 
-Find the URL id by printing the URLs: 
-
-`print urls`
-
 Add the actual job wording you want to detect:
 
-`word add 1 "software developer"`
+`word gadd "software developer"`
 
 You could also add:
 
-`word add 1 "software development intern"`
+`word gadd "software development intern"`
 
 The important distinction is that the career-site search can be broad, while the tracked phrase should be specific enough to identify a real position.
 
@@ -228,3 +234,5 @@ This reduces false positives while still allowing the company’s career search 
 The Internshipper only checks the jobs displayed on the URL you provide. If a career site splits its results across multiple pages, jobs on later pages may not be checked.
 
 This usually has less impact when monitoring for new postings because career sites commonly place newer jobs near the beginning of their results. However, when first adding a URL, an existing job you are interested in could already be on a later page and may not be detected.
+
+This is exactly why the career-site search itself matters: searching the site for a broad term like "intern" or "software develop" before copying the URL narrows the results down to a page that's actually likely to contain the jobs you care about, rather than relying on The Internshipper to find them buried in an unfiltered, paginated list.
