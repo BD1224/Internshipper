@@ -24,3 +24,6 @@ build/
 # container stuff, not going to be used
 .containerignore
 Containerfile
+
+# unnecesary copy
+README copy.md
