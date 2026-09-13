@@ -10,7 +10,11 @@ def provide_status():
     print_out = ""
 
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)  # one browser for the whole run, reused across urls instead of per-url
+        try:
+            browser = p.chromium.launch(headless=True, args=["--no-sandbox"])  # one browser for the whole run, reused across urls instead of per-url; --no-sandbox needed since containers usually run as root, and chromium refuses its sandbox as root without this flag
+        except Exception as e:
+            print_formatted_text(ANSI(f"{RED}Failed to launch browser: {e}{RESET}\n"))
+            return
 
         for row in get_urls():
             site_id = row[0]  # id

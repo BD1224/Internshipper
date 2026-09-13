@@ -25,5 +25,6 @@ def display(status_on_flag, new_time_flag, lock):
         except (EOFError, KeyboardInterrupt):
             print()  # EOF doesnt go to a new line when continuing, neither does ^C
             continue
-        except:
+        except Exception as e:
+            print(f"\nError: {e}\n")  # surfaces the real error instead of failing silently
             continue

@@ -1,0 +1,11 @@
+services:
+  internshipper:
+    image: mcr.microsoft.com/playwright/python:v1.62.0-noble  # ships with chromium + its os deps already installed, no build needed
+    working_dir: /app
+    volumes:
+      - .:/app  # mounts the repo in directly, so data/tables.db persists on the host between runs
+    environment:
+      - TZ=America/New_York  # container defaults to UTC otherwise, throwing off the scheduled status_time check
+    stdin_open: true  # keeps stdin open, needed for the interactive cli
+    tty: true  # allocates a pseudo-tty so prompt_toolkit's input/output render correctly
+    command: bash -c "pip install --upgrade pip && pip install -e . && python -m src.database.init_db && python -m src.main"

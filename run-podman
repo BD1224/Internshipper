@@ -1,0 +1,3 @@
+#!/bin/bash
+# This is a run file for podman container. run source run-podman
+podman-compose run --rm internshipper

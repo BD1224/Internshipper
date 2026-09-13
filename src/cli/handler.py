@@ -26,6 +26,7 @@ def handle_input(user_input):
         case "deleteall":
             mc.delete()
         case "run":
+            print()
             ps.provide_status()
         case "url":
             if len(user_input) < 3:

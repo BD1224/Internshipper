@@ -1,0 +1,12 @@
+#!/bin/bash
+#  setup file (for macOS or linux). run source setup
+
+python3 -m venv .venv  # creates virtual environment
+source .venv/bin/activate  # activates
+
+pip install --upgrade pip  # best practice when making a venv
+pip install -e .  # installs all dependencies defined in pyproject.toml, use -e when developing (will keep like this for now)
+playwright install chromium  # needed for logic
+
+python -m src.database.init_db  # initializes database
+

@@ -1,0 +1,4 @@
+#!/bin/bash
+# This is a run file for local execution. run source run-local
+source .venv/bin/activate  # activates if not already activated
+python -m src.main

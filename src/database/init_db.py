@@ -35,9 +35,10 @@ def init_db():
     """)  # table for single variables
 
     cursor.execute(
-        "INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?), (?, ?), (?, ?)",
+        "INSERT OR IGNORE INTO settings (key, value) VALUES (?, ?), (?, ?), (?, ?)",
         ("prev_print", "", "status_on", True, "status_time", 6)
     )  # starts tracking the previous print, whether the user wants status updates, and what time they want it
+    # OR IGNORE means existing keys are left as-is; only missing keys get the default on later runs
 
     conn.commit()  # save
     conn.close()

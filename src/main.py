@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 
 def get_next_call_time(last_call_time): 
     target_hour = int(get_time())  # get time will return a string(text) but it will always be a valid number
-    next_call_time = last_call_time.replace(hour=target_hour, minute=0, second=0, microsecond=0)
+    next_call_time = last_call_time.replace(hour=target_hour, minute=4, second=0, microsecond=0)
     if next_call_time <= last_call_time:  # if next target_hour is in the next day, shift target time to next day
         next_call_time += timedelta(days=1)  # timedelta is needed to add times
 
@@ -22,7 +22,10 @@ def run_status(stop_flag, status_on_flag, new_time_flag, lock):  # flag is pass 
 
             if now >= next_call_time:
                 with lock:  # handles .aquire() and .release() and errors
-                    provide_status()
+                    try:
+                        provide_status()
+                    except Exception as e:
+                        print(f"\nError: {e}\n")  # keeps this thread alive instead of dying silently
                 next_call_time = get_next_call_time(now)
             else:
                 stop_flag.wait(10)  # every 10 seconds it checks
