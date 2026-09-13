@@ -45,7 +45,6 @@ inst: displays instructions
     """)
 
 def print_inst():
-    from config import SCRAPING_FREQUENCY
     print(f"""
 To use The Internshipper, first go to a company's career page and search for
 "intern" and, if you want, a specific location. Copy the URL of the resulting
@@ -55,7 +54,7 @@ A global word is a word that every global URL searches for. A non-global word
 is assigned to only one specific URL, meaning only that URL searches for it.
 A non-global URL does not search for any global words and will only search for
 the words specifically assigned to that URL.
-The program checks each URL every {SCRAPING_FREQUENCY} hours and displays the status
+The program checks each URL once a day and displays the status
 or outcome of each search. Once a URL finds one of its search words, it will
 no longer appear in the normal status display. You can still view URLs that
 have already found a match by using the appropriate display commands.

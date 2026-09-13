@@ -498,13 +498,7 @@ def increment_consecutive_fails(URL):
         "UPDATE sites SET consecutive_fails = consecutive_fails + 1 WHERE url = ? RETURNING consecutive_fails",
         (URL,)
     )
-    consecutive_fails = cursor.fetchone()
-
-    if consecutive_fails >=3:
-        cursor.execute(
-            "UPDATE sites SET use_playwrite = 1 WHERE url = ?",
-            (URL,)
-        )
+    consecutive_fails = cursor.fetchone()[0]
 
     conn.commit()
     conn.close()
@@ -515,10 +509,9 @@ def reset_consecutive_fails(URL):
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
-    cursor.execute("""
-        UPDATE sites SET consecutive_fails = 0 WHERE url = ?
-        UPDATE sites SET use_playwrite = 0 WHERE url = ?
-    """, (URL,URL)
+    cursor.execute(
+        "UPDATE sites SET consecutive_fails = 0 WHERE url = ?",
+        (URL,)
     )
 
     conn.commit()

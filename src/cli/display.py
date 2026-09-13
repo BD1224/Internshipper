@@ -1,5 +1,5 @@
 import shlex  # used to handle inputs with quotes
-from .handler import handle_input
+from src.cli.handler import handle_input
 from prompt_toolkit import prompt
 
 def display(status_on_flag, new_time_flag, lock):
